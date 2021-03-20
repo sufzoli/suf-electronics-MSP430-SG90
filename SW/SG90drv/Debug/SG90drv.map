@@ -1,10 +1,10 @@
 ******************************************************************************
-                  MSP430 Linker PC v4.3.3                      
+                  MSP430 Linker PC v4.3.8                      
 ******************************************************************************
->> Linked Wed Aug 13 09:49:38 2014
+>> Linked Fri Jun 05 05:18:46 2015
 
 OUTPUT FILE NAME:   <SG90drv.out>
-ENTRY POINT SYMBOL: "_c_int00"  address: 0000e2c2
+ENTRY POINT SYMBOL: "_c_int00"  address: 0000c2ec
 
 
 MEMORY CONFIGURATION
@@ -14,26 +14,26 @@ MEMORY CONFIGURATION
   SFR                   00000000   00000010  00000000  00000010  RWIX
   PERIPHERALS_8BIT      00000010   000000f0  00000000  000000f0  RWIX
   PERIPHERALS_16BIT     00000100   00000100  00000000  00000100  RWIX
-  RAM                   00000200   00000100  00000061  0000009f  RWIX
+  RAM                   00000200   00000200  00000069  00000197  RWIX
   INFOD                 00001000   00000040  00000000  00000040  RWIX
   INFOC                 00001040   00000040  00000000  00000040  RWIX
   INFOB                 00001080   00000040  00000000  00000040  RWIX
   INFOA                 000010c0   00000040  00000000  00000040  RWIX
-  FLASH                 0000e000   00001fe0  00000394  00001c4c  RWIX
+  FLASH                 0000c000   00003fe0  000003ca  00003c16  RWIX
   INT00                 0000ffe0   00000002  00000000  00000002  RWIX
   INT01                 0000ffe2   00000002  00000000  00000002  RWIX
   INT02                 0000ffe4   00000002  00000002  00000000  RWIX
   INT03                 0000ffe6   00000002  00000002  00000000  RWIX
-  INT04                 0000ffe8   00000002  00000002  00000000  RWIX
+  INT04                 0000ffe8   00000002  00000000  00000002  RWIX
   INT05                 0000ffea   00000002  00000002  00000000  RWIX
-  INT06                 0000ffec   00000002  00000000  00000002  RWIX
-  INT07                 0000ffee   00000002  00000000  00000002  RWIX
+  INT06                 0000ffec   00000002  00000002  00000000  RWIX
+  INT07                 0000ffee   00000002  00000002  00000000  RWIX
   INT08                 0000fff0   00000002  00000002  00000000  RWIX
   INT09                 0000fff2   00000002  00000002  00000000  RWIX
   INT10                 0000fff4   00000002  00000002  00000000  RWIX
   INT11                 0000fff6   00000002  00000002  00000000  RWIX
-  INT12                 0000fff8   00000002  00000000  00000002  RWIX
-  INT13                 0000fffa   00000002  00000000  00000002  RWIX
+  INT12                 0000fff8   00000002  00000002  00000000  RWIX
+  INT13                 0000fffa   00000002  00000002  00000000  RWIX
   INT14                 0000fffc   00000002  00000002  00000000  RWIX
   RESET                 0000fffe   00000002  00000002  00000000  RWIX
 
@@ -44,7 +44,10 @@ SECTION ALLOCATION MAP
 section   page    origin      length       input sections
 --------  ----  ----------  ----------   ----------------
 .init_array 
-*          0    0000e000    00000000     UNINITIALIZED
+*          0    0000c000    00000000     UNINITIALIZED
+
+.TI.noinit 
+*          0    00000200    00000000     UNINITIALIZED
 
 .bss       0    00000200    0000000e     UNINITIALIZED
                   00000200    0000000a     (.common:rxBuffer)
@@ -52,51 +55,52 @@ section   page    origin      length       input sections
                   0000020c    00000001     (.common:rxBuffLen)
                   0000020d    00000001     (.common:rxEchoPos)
 
-.TI.noinit 
-*          0    00000200    00000000     UNINITIALIZED
-
-.data      0    0000020e    00000003     UNINITIALIZED
-                  0000020e    00000003     serial.obj (.data)
-
 .TI.persistent 
 *          0    0000020e    00000000     UNINITIALIZED
 
-.stack     0    000002b0    00000050     UNINITIALIZED
-                  000002b0    00000002     rts430_eabi.lib : boot.obj (.stack)
-                  000002b2    0000004e     --HOLE--
+.data      0    0000020e    0000000b     UNINITIALIZED
+                  0000020e    00000004     rts430_eabi.lib : _lock.obj (.data)
+                  00000212    00000004                     : exit_gvars.obj (.data)
+                  00000216    00000003     serial.obj (.data)
 
-.text      0    0000e000    00000370     
-                  0000e000    00000084     main.obj (.text:checkSerial)
-                  0000e084    0000005e     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
-                  0000e0e2    0000005e                     : autoinit.obj (.text:_auto_init)
-                  0000e140    0000005e     main.obj (.text:moveServo)
-                  0000e19e    0000005c     serial.obj (.text:Timer_A1_ISR)
-                  0000e1fa    00000048     main.obj (.text:main)
-                  0000e242    0000003a     serial.obj (.text:Timer_A0_ISR)
-                  0000e27c    00000028     serial.obj (.text:TimerA_UART_tx)
-                  0000e2a4    0000001e     serial.obj (.text:SERIAL_init)
-                  0000e2c2    0000001a     rts430_eabi.lib : boot.obj (.text:_c_int00_noexit)
-                  0000e2dc    00000014                     : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
-                  0000e2f0    00000014                     : mult16.obj (.text)
-                  0000e304    00000012     serial.obj (.text:TimerA_UART_init)
-                  0000e316    00000012     serial.obj (.text:TimerA_UART_print)
-                  0000e328    00000012     rts430_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
-                  0000e33a    00000012                     : memcpy.obj (.text:memcpy)
-                  0000e34c    00000010                     : epilog.obj (.text)
-                  0000e35c    00000006                     : isr_trap.obj (.text:__TI_ISR_TRAP)
-                  0000e362    00000006                     : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
-                  0000e368    00000004                     : pre_init.obj (.text:_system_pre_init)
-                  0000e36c    00000004                     : exit.obj (.text:abort)
+.stack     0    000003b0    00000050     UNINITIALIZED
+                  000003b0    00000002     rts430_eabi.lib : boot.obj (.stack)
+                  000003b2    0000004e     --HOLE--
 
-.const     0    0000e370    0000000a     
-                  0000e370    0000000a     main.obj (.const:.string)
+.text      0    0000c000    0000039e     
+                  0000c000    00000084     main.obj (.text:checkSerial)
+                  0000c084    0000005e     rts430_eabi.lib : copy_decompress_rle.obj (.text:__TI_decompress_rle_core)
+                  0000c0e2    0000005e                     : autoinit.obj (.text:_auto_init)
+                  0000c140    0000005e     main.obj (.text:moveServo)
+                  0000c19e    0000005c     serial.obj (.text:Timer_A1_ISR)
+                  0000c1fa    00000048     main.obj (.text:main)
+                  0000c242    0000003a     serial.obj (.text:Timer_A0_ISR)
+                  0000c27c    0000002a     rts430_eabi.lib : exit.obj (.text:exit)
+                  0000c2a6    00000028     serial.obj (.text:TimerA_UART_tx)
+                  0000c2ce    0000001e     serial.obj (.text:SERIAL_init)
+                  0000c2ec    0000001c     rts430_eabi.lib : boot.obj (.text:_c_int00_noargs)
+                  0000c308    00000014                     : copy_zero_init.obj (.text:decompress:ZI:__TI_zero_init)
+                  0000c31c    00000014                     : mult16.obj (.text)
+                  0000c330    00000012     serial.obj (.text:TimerA_UART_init)
+                  0000c342    00000012     serial.obj (.text:TimerA_UART_print)
+                  0000c354    00000012     rts430_eabi.lib : copy_decompress_none.obj (.text:decompress:none:__TI_decompress_none)
+                  0000c366    00000012                     : memcpy.obj (.text:memcpy)
+                  0000c378    00000010                     : epilog.obj (.text)
+                  0000c388    00000006                     : isr_trap.obj (.text:_isr:__TI_ISR_TRAP)
+                  0000c38e    00000006                     : copy_decompress_rle.obj (.text:decompress:rle24:__TI_decompress_rle24)
+                  0000c394    00000004                     : pre_init.obj (.text:_system_pre_init)
+                  0000c398    00000004                     : exit.obj (.text:abort)
+                  0000c39c    00000002                     : _lock.obj (.text:_nop)
 
-.cinit     0    0000e37a    0000001a     
-                  0000e37a    00000007     (.cinit..data.load) [load image]
-                  0000e381    00000001     --HOLE-- [fill = 0]
-                  0000e382    00000006     (__TI_handler_table)
-                  0000e388    00000004     (.cinit..bss.load) [load image, compression = zero_init]
-                  0000e38c    00000008     (__TI_cinit_table)
+.const     0    0000c39e    0000000a     
+                  0000c39e    0000000a     main.obj (.const:.string)
+
+.cinit     0    0000c3a8    00000022     
+                  0000c3a8    0000000f     (.cinit..data.load) [load image]
+                  0000c3b7    00000001     --HOLE-- [fill = 0]
+                  0000c3b8    00000006     (__TI_handler_table)
+                  0000c3be    00000004     (.cinit..bss.load) [load image, compression = zero_init]
+                  0000c3c2    00000008     (__TI_cinit_table)
 
 PORT1      0    0000ffe4    00000002     
                   0000ffe4    00000002     rts430_eabi.lib : int02.obj (.int02)
@@ -104,11 +108,16 @@ PORT1      0    0000ffe4    00000002
 PORT2      0    0000ffe6    00000002     
                   0000ffe6    00000002     rts430_eabi.lib : int03.obj (.int03)
 
-USI        0    0000ffe8    00000002     
-                  0000ffe8    00000002     rts430_eabi.lib : int04.obj (.int04)
-
 ADC10      0    0000ffea    00000002     
                   0000ffea    00000002     rts430_eabi.lib : int05.obj (.int05)
+
+USCIAB0TX 
+*          0    0000ffec    00000002     
+                  0000ffec    00000002     rts430_eabi.lib : int06.obj (.int06)
+
+USCIAB0RX 
+*          0    0000ffee    00000002     
+                  0000ffee    00000002     rts430_eabi.lib : int07.obj (.int07)
 
 TIMER0_A1 
 *          0    0000fff0    00000002     
@@ -125,6 +134,14 @@ COMPARATORA
 *          0    0000fff6    00000002     
                   0000fff6    00000002     rts430_eabi.lib : int11.obj (.int11)
 
+TIMER1_A1 
+*          0    0000fff8    00000002     
+                  0000fff8    00000002     rts430_eabi.lib : int12.obj (.int12)
+
+TIMER1_A0 
+*          0    0000fffa    00000002     
+                  0000fffa    00000002     rts430_eabi.lib : int13.obj (.int13)
+
 NMI        0    0000fffc    00000002     
                   0000fffc    00000002     rts430_eabi.lib : int14.obj (.int14)
 
@@ -134,14 +151,14 @@ NMI        0    0000fffc    00000002
 
 LINKER GENERATED COPY TABLES
 
-__TI_cinit_table @ 0000e38c records: 2, size/record: 4, table size: 8
-	.data: load addr=0000e37a, load size=00000007 bytes, run addr=0000020e, run size=00000003 bytes, compression=copy
-	.bss: load addr=0000e388, load size=00000004 bytes, run addr=00000200, run size=0000000e bytes, compression=zero_init
+__TI_cinit_table @ 0000c3c2 records: 2, size/record: 4, table size: 8
+	.data: load addr=0000c3a8, load size=0000000f bytes, run addr=0000020e, run size=0000000b bytes, compression=copy
+	.bss: load addr=0000c3be, load size=00000004 bytes, run addr=00000200, run size=0000000e bytes, compression=zero_init
 
 
 LINKER GENERATED HANDLER TABLE
 
-__TI_handler_table @ 0000e382 records: 3, size/record: 2, table size: 6
+__TI_handler_table @ 0000c3b8 records: 3, size/record: 2, table size: 6
 	index: 0, handler: __TI_zero_init
 	index: 1, handler: __TI_decompress_rle24
 	index: 2, handler: __TI_decompress_none
@@ -161,7 +178,7 @@ address    name
 00000057   BCSCTL1
 00000058   BCSCTL2
 00000053   BCSCTL3
-0000e36c   C$$EXIT
+0000c398   C$$EXIT
 00000059   CACTL1
 0000005a   CACTL2
 000010fb   CALBC1_12MHZ
@@ -178,7 +195,9 @@ address    name
 0000012a   FCTL2
 0000012c   FCTL3
 00000000   IE1
+00000001   IE2
 00000002   IFG1
+00000003   IFG2
 00000022   P1DIR
 00000025   P1IE
 00000024   P1IES
@@ -197,7 +216,13 @@ address    name
 0000002f   P2REN
 0000002e   P2SEL
 00000042   P2SEL2
-0000e2a4   SERIAL_init
+0000001a   P3DIR
+00000018   P3IN
+00000019   P3OUT
+00000010   P3REN
+0000001b   P3SEL
+00000043   P3SEL2
+0000c2ce   SERIAL_init
 00000172   TA0CCR0
 00000174   TA0CCR1
 00000176   TA0CCR2
@@ -207,66 +232,101 @@ address    name
 00000160   TA0CTL
 0000012e   TA0IV
 00000170   TA0R
-0000e304   TimerA_UART_init
-0000e316   TimerA_UART_print
-0000e27c   TimerA_UART_tx
-0000e242   Timer_A0_ISR
-0000e19e   Timer_A1_ISR
-0000007a   USICCTL
-0000007a   USICKCTL
-0000007b   USICNT
-00000078   USICTL
-00000078   USICTL0
-00000079   USICTL1
-0000007c   USISR
-0000007d   USISRH
-0000007c   USISRL
+00000192   TA1CCR0
+00000194   TA1CCR1
+00000196   TA1CCR2
+00000182   TA1CCTL0
+00000184   TA1CCTL1
+00000186   TA1CCTL2
+00000180   TA1CTL
+0000011e   TA1IV
+00000190   TA1R
+000010db   TLV_ADC10_1_LEN
+000010da   TLV_ADC10_1_TAG
+000010c0   TLV_CHECKSUM
+000010f7   TLV_DCO_30_LEN
+000010f6   TLV_DCO_30_TAG
+0000c330   TimerA_UART_init
+0000c342   TimerA_UART_print
+0000c2a6   TimerA_UART_tx
+0000c242   Timer_A0_ISR
+0000c19e   Timer_A1_ISR
+0000005d   UCA0ABCTL
+00000062   UCA0BR0
+00000063   UCA0BR1
+00000060   UCA0CTL0
+00000061   UCA0CTL1
+0000005f   UCA0IRRCTL
+0000005e   UCA0IRTCTL
+00000064   UCA0MCTL
+00000066   UCA0RXBUF
+00000065   UCA0STAT
+00000067   UCA0TXBUF
+0000006a   UCB0BR0
+0000006b   UCB0BR1
+00000068   UCB0CTL0
+00000069   UCB0CTL1
+0000006c   UCB0I2CIE
+00000118   UCB0I2COA
+0000011a   UCB0I2CSA
+0000006e   UCB0RXBUF
+0000006d   UCB0STAT
+0000006f   UCB0TXBUF
 00000120   WDTCTL
-00000300   __STACK_END
+00000400   __STACK_END
 00000050   __STACK_SIZE
-0000e38c   __TI_CINIT_Base
-0000e394   __TI_CINIT_Limit
-0000e382   __TI_Handler_Table_Base
-0000e388   __TI_Handler_Table_Limit
+0000c3c2   __TI_CINIT_Base
+0000c3ca   __TI_CINIT_Limit
+0000c3b8   __TI_Handler_Table_Base
+0000c3be   __TI_Handler_Table_Limit
 UNDEFED    __TI_INITARRAY_Base
 UNDEFED    __TI_INITARRAY_Limit
-0000e35c   __TI_ISR_TRAP
+0000c388   __TI_ISR_TRAP
 00000001   __TI_args_main
-0000e328   __TI_decompress_none
-0000e362   __TI_decompress_rle24
+00000212   __TI_cleanup_ptr
+0000c354   __TI_decompress_none
+0000c38e   __TI_decompress_rle24
+00000214   __TI_dtors_ptr
 00000001   __TI_exit
 0000ffe4   __TI_int02
 0000ffe6   __TI_int03
-0000ffe8   __TI_int04
 0000ffea   __TI_int05
+0000ffec   __TI_int06
+0000ffee   __TI_int07
 0000fff0   __TI_int08
 0000fff2   __TI_int09
 0000fff4   __TI_int10
 0000fff6   __TI_int11
+0000fff8   __TI_int12
+0000fffa   __TI_int13
 0000fffc   __TI_int14
-0000e2dc   __TI_zero_init
+0000c308   __TI_zero_init
 ffffffff   __binit__
 ffffffff   __c_args__
-0000e358   __mspabi_func_epilog_1
-0000e356   __mspabi_func_epilog_2
-0000e354   __mspabi_func_epilog_3
-0000e352   __mspabi_func_epilog_4
-0000e350   __mspabi_func_epilog_5
-0000e34e   __mspabi_func_epilog_6
-0000e34c   __mspabi_func_epilog_7
-0000e2f0   __mspabi_mpyi
-0000e0e2   _auto_init
-0000e2c2   _c_int00
-0000e2c2   _c_int00_noexit
+0000c384   __mspabi_func_epilog_1
+0000c382   __mspabi_func_epilog_2
+0000c380   __mspabi_func_epilog_3
+0000c37e   __mspabi_func_epilog_4
+0000c37c   __mspabi_func_epilog_5
+0000c37a   __mspabi_func_epilog_6
+0000c378   __mspabi_func_epilog_7
+0000c31c   __mspabi_mpyi
+0000c0e2   _auto_init
+0000c2ec   _c_int00
+0000c2ec   _c_int00_noargs
+0000020e   _lock
+0000c39c   _nop
 0000fffe   _reset_vector
-000002b0   _stack
-0000e368   _system_pre_init
-0000e36c   abort
+000003b0   _stack
+0000c394   _system_pre_init
+00000210   _unlock
+0000c398   abort
 ffffffff   binit
-0000e000   checkSerial
-0000e1fa   main
-0000e33a   memcpy
-0000e140   moveServo
+0000c000   checkSerial
+0000c27c   exit
+0000c1fa   main
+0000c366   memcpy
+0000c140   moveServo
 0000020c   rxBuffLen
 00000200   rxBuffer
 0000020d   rxEchoPos
@@ -278,9 +338,16 @@ GLOBAL SYMBOLS: SORTED BY Symbol Address
 address    name
 --------   ----
 00000000   IE1
+00000001   IE2
 00000001   __TI_args_main
 00000001   __TI_exit
 00000002   IFG1
+00000003   IFG2
+00000010   P3REN
+00000018   P3IN
+00000019   P3OUT
+0000001a   P3DIR
+0000001b   P3SEL
 00000020   P1IN
 00000021   P1OUT
 00000022   P1DIR
@@ -299,6 +366,7 @@ address    name
 0000002f   P2REN
 00000041   P1SEL2
 00000042   P2SEL2
+00000043   P3SEL2
 00000048   ADC10DTC0
 00000049   ADC10DTC1
 0000004a   ADC10AE0
@@ -310,15 +378,28 @@ address    name
 00000059   CACTL1
 0000005a   CACTL2
 0000005b   CAPD
-00000078   USICTL
-00000078   USICTL0
-00000079   USICTL1
-0000007a   USICCTL
-0000007a   USICKCTL
-0000007b   USICNT
-0000007c   USISR
-0000007c   USISRL
-0000007d   USISRH
+0000005d   UCA0ABCTL
+0000005e   UCA0IRTCTL
+0000005f   UCA0IRRCTL
+00000060   UCA0CTL0
+00000061   UCA0CTL1
+00000062   UCA0BR0
+00000063   UCA0BR1
+00000064   UCA0MCTL
+00000065   UCA0STAT
+00000066   UCA0RXBUF
+00000067   UCA0TXBUF
+00000068   UCB0CTL0
+00000069   UCB0CTL1
+0000006a   UCB0BR0
+0000006b   UCB0BR1
+0000006c   UCB0I2CIE
+0000006d   UCB0STAT
+0000006e   UCB0RXBUF
+0000006f   UCB0TXBUF
+00000118   UCB0I2COA
+0000011a   UCB0I2CSA
+0000011e   TA1IV
 00000120   WDTCTL
 00000128   FCTL1
 0000012a   FCTL2
@@ -332,6 +413,14 @@ address    name
 00000172   TA0CCR0
 00000174   TA0CCR1
 00000176   TA0CCR2
+00000180   TA1CTL
+00000182   TA1CCTL0
+00000184   TA1CCTL1
+00000186   TA1CCTL2
+00000190   TA1R
+00000192   TA1CCR0
+00000194   TA1CCR1
+00000196   TA1CCR2
 000001b0   ADC10CTL0
 000001b2   ADC10CTL1
 000001b4   ADC10MEM
@@ -340,8 +429,17 @@ address    name
 0000020a   txData
 0000020c   rxBuffLen
 0000020d   rxEchoPos
-000002b0   _stack
-00000300   __STACK_END
+0000020e   _lock
+00000210   _unlock
+00000212   __TI_cleanup_ptr
+00000214   __TI_dtors_ptr
+000003b0   _stack
+00000400   __STACK_END
+000010c0   TLV_CHECKSUM
+000010da   TLV_ADC10_1_TAG
+000010db   TLV_ADC10_1_LEN
+000010f6   TLV_DCO_30_TAG
+000010f7   TLV_DCO_30_LEN
 000010f8   CALDCO_16MHZ
 000010f9   CALBC1_16MHZ
 000010fa   CALDCO_12MHZ
@@ -350,46 +448,51 @@ address    name
 000010fd   CALBC1_8MHZ
 000010fe   CALDCO_1MHZ
 000010ff   CALBC1_1MHZ
-0000e000   checkSerial
-0000e0e2   _auto_init
-0000e140   moveServo
-0000e19e   Timer_A1_ISR
-0000e1fa   main
-0000e242   Timer_A0_ISR
-0000e27c   TimerA_UART_tx
-0000e2a4   SERIAL_init
-0000e2c2   _c_int00
-0000e2c2   _c_int00_noexit
-0000e2dc   __TI_zero_init
-0000e2f0   __mspabi_mpyi
-0000e304   TimerA_UART_init
-0000e316   TimerA_UART_print
-0000e328   __TI_decompress_none
-0000e33a   memcpy
-0000e34c   __mspabi_func_epilog_7
-0000e34e   __mspabi_func_epilog_6
-0000e350   __mspabi_func_epilog_5
-0000e352   __mspabi_func_epilog_4
-0000e354   __mspabi_func_epilog_3
-0000e356   __mspabi_func_epilog_2
-0000e358   __mspabi_func_epilog_1
-0000e35c   __TI_ISR_TRAP
-0000e362   __TI_decompress_rle24
-0000e368   _system_pre_init
-0000e36c   C$$EXIT
-0000e36c   abort
-0000e382   __TI_Handler_Table_Base
-0000e388   __TI_Handler_Table_Limit
-0000e38c   __TI_CINIT_Base
-0000e394   __TI_CINIT_Limit
+0000c000   checkSerial
+0000c0e2   _auto_init
+0000c140   moveServo
+0000c19e   Timer_A1_ISR
+0000c1fa   main
+0000c242   Timer_A0_ISR
+0000c27c   exit
+0000c2a6   TimerA_UART_tx
+0000c2ce   SERIAL_init
+0000c2ec   _c_int00
+0000c2ec   _c_int00_noargs
+0000c308   __TI_zero_init
+0000c31c   __mspabi_mpyi
+0000c330   TimerA_UART_init
+0000c342   TimerA_UART_print
+0000c354   __TI_decompress_none
+0000c366   memcpy
+0000c378   __mspabi_func_epilog_7
+0000c37a   __mspabi_func_epilog_6
+0000c37c   __mspabi_func_epilog_5
+0000c37e   __mspabi_func_epilog_4
+0000c380   __mspabi_func_epilog_3
+0000c382   __mspabi_func_epilog_2
+0000c384   __mspabi_func_epilog_1
+0000c388   __TI_ISR_TRAP
+0000c38e   __TI_decompress_rle24
+0000c394   _system_pre_init
+0000c398   C$$EXIT
+0000c398   abort
+0000c39c   _nop
+0000c3b8   __TI_Handler_Table_Base
+0000c3be   __TI_Handler_Table_Limit
+0000c3c2   __TI_CINIT_Base
+0000c3ca   __TI_CINIT_Limit
 0000ffe4   __TI_int02
 0000ffe6   __TI_int03
-0000ffe8   __TI_int04
 0000ffea   __TI_int05
+0000ffec   __TI_int06
+0000ffee   __TI_int07
 0000fff0   __TI_int08
 0000fff2   __TI_int09
 0000fff4   __TI_int10
 0000fff6   __TI_int11
+0000fff8   __TI_int12
+0000fffa   __TI_int13
 0000fffc   __TI_int14
 0000fffe   _reset_vector
 ffffffff   __binit__
@@ -398,4 +501,4 @@ ffffffff   binit
 UNDEFED    __TI_INITARRAY_Base
 UNDEFED    __TI_INITARRAY_Limit
 
-[120 symbols]
+[163 symbols]

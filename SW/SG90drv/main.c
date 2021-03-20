@@ -9,10 +9,10 @@
 
 signed volatile char rxEchoPos;
 
-int checkSerial()
+unsigned int checkSerial()
 {
 	int i;
-	int retvalue = -1;
+	unsigned int retvalue = 0;
 	// Iterate trough the received characters
 	for(;rxEchoPos<rxBuffLen;rxEchoPos++)
 	{
@@ -83,7 +83,7 @@ void main (void)
 	// Set the servo port to digital output
 	P2DIR |= BIT2;
 
- 	int deg; // servo rotation degree
+ 	unsigned int deg; // servo rotation degree
 
  	// Main loop
  	while(1)
@@ -91,7 +91,7 @@ void main (void)
  		// load the target degree from the serial port
  		deg = checkSerial();
  		// if there is a new value
- 		if(deg > -1)
+ 		if(deg > 0)
  		{
  			// Move the servo
  			moveServo(deg);
